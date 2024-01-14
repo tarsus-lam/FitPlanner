@@ -1,0 +1,5 @@
+# ignore ipynb checkpoints
+**.ipynb_checkpoints
+
+# ignore .DS_Store
+**.DS_Store
