@@ -3,3 +3,9 @@
 
 # ignore .DS_Store
 **.DS_Store
+
+# ignore large data files
+data/merged_exercise_user_data.csv
+
+# ignore .env file
+**.env
