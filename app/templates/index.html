@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Workout Plan Generator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Web App Title</title>
+    <style>
+        body {
+            background-image: linear-gradient(to right, #003366 , #006699);
+            color: #ffffff; /* White text for readability */
+        }
+        
+        /* Info Icon Styling */
+        .info-icon {
+        display: inline-block;
+        width: 12px; /* Size of the circle */
+        height: 12px; /* Size of the circle */
+        background-color: #d3d3d3; /* Circle color */
+        color: black; /* Question mark color */
+        text-align: center;
+        line-height: 12px; /* Align the question mark vertically */
+        border-radius: 50%; /* Make it round */
+        font-size: 10px; /* Size of the question mark */
+        margin-left: 3px; /* Space between the dropdown and the icon */
+       }
+       
+       #tooltip {
+        display: none; /* Start hidden */
+        position: absolute; /* Allows you to position it relative to the icon */
+        background-color: black;
+        color: white;
+        padding: 5px;
+        border-radius: 5px;
+        font-size: 12px;
+        /* Adjust left/top margins to position correctly near the icon */
+        margin-left: 240px; /* Example placement */
+        margin-top: -13px; /* Adjust as necessary */
+        max-width: 250px; /* Adjust max width of tooltip */
+       }
+       
+        /* Button Styling */
+        button {
+            background-color: #4CAF50; /* Green background */
+            border: none; /* Remove borders */
+            color: white; /* White text */
+            padding: 15px 32px; /* Padding inside the button */
+            text-align: center; /* Centered text */
+            text-decoration: none; /* No underline on the text */
+            display: inline-block; /* Make the button inline-block */
+            font-size: 16px; /* Increase font size */
+            margin: 4px 2px; /* Margins around the button */
+            cursor: pointer; /* Change mouse cursor on hover */
+            border-radius: 8px; /* Rounded corners */
+            transition: all 0.3s ease 0s; /* Smooth transition for hover effect */
+        }
+
+        button:hover {
+            background-color: #45a049; /* Darker shade of green on hover */
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19); /* Add shadow on hover */
+        }
+    </style>
+    
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+        // Function to check conditions and update the form dynamically
+        function updateFormDisplay() {
+            const selectedMuscles = document.querySelectorAll('input[name="muscle"]:checked').length;
+            const selectedWorkoutTypes = document.querySelectorAll('input[name="types"]:checked').length;
+            const selectedEquipment = document.querySelectorAll('input[name="equipment"]:checked').length;
+
+            // Show "Body Split Plan" if more than one muscle group is selected
+            const splitSelectSection = document.getElementById('split-section');
+            splitSelectSection.style.display = selectedMuscles > 1 ? 'block' : 'none';
+
+        }
+
+        // Attach the event listener to all relevant checkboxes
+        document.querySelectorAll('input[type="checkbox"]').forEach(item => {
+            item.addEventListener('change', updateFormDisplay);
+        });
+
+        // Initial update in case of pre-checked values when the page loads
+        updateFormDisplay();
+    });
+    </script>
+</head>
+<body>
+    <h2>Generate Your Workout Plan</h2>
+    <form action="/generate" method="post">
+
+        <fieldset>
+            <legend>Desired Muscle Groups:</legend>
+            <input type="checkbox" id="chest" name="muscle" value="Chest">
+            <label for="chest">Chest</label><br>
+            <input type="checkbox" id="back" name="muscle" value="Back">
+            <label for="back">Back</label><br>
+            <input type="checkbox" id="shoulders" name="muscle" value="Shoulders">
+            <label for="shoulders">Shoulders</label><br>
+            <input type="checkbox" id="arms" name="muscle" value="Arms">
+            <label for="arms">Arms</label><br>
+            <input type="checkbox" id="legs" name="muscle" value="Legs">
+            <label for="legs">Legs</label><br>
+            <input type="checkbox" id="core" name="muscle" value="Core">
+            <label for="core">Core</label><br>
+            <input type="checkbox" id="glutes" name="muscle" value="Glutes">
+            <label for="glutes">Glutes</label><br>
+            <input type="checkbox" id="neck" name="muscle" value="Neck">
+            <label for="neck">Neck</label><br>
+        </fieldset>
+        <br>
+        
+        <fieldset>
+            <legend>Workout Type:</legend>
+            <input type="checkbox" id="cardio" name="types" value="Cardio">
+            <label for="cardio">Cardio</label><br>
+            <input type="checkbox" id="olympic_weightlifting" name="types" value="Olympic Weightlifting">
+            <label for="olympic_weightlifting">Olympic Weightlifting</label><br>
+            <input type="checkbox" id="plyometrics" name="types" value="Plyometrics">
+            <label for="plyometrics">Plyometrics</label><br>
+            <input type="checkbox" id="powerlifting" name="types" value="Powerlifting">
+            <label for="powerlifting">Powerlifting</label><br>
+            <input type="checkbox" id="strength" name="types" value="Strength">
+            <label for="strength">Strength</label><br>
+            <input type="checkbox" id="stretching" name="types" value="Stretching">
+            <label for="stretching">Stretching</label><br>
+            <input type="checkbox" id="strongman" name="types" value="Strongman">
+            <label for="strongman">Strongman</label><br>
+        </fieldset>
+        <br>
+        
+        <fieldset>
+            <legend>Available Equipment:</legend>
+            <input type="checkbox" id="at_home_body" name="equipment" value="At Home (Body)">
+            <label for="at_home_body">No Equipment (Body Only)</label><br>
+            <input type="checkbox" id="at_home_equipment" name="equipment" value="At Home (Equipment)">
+            <label for="at_home_equipment">At Home (Equipment)</label><br>
+            <input type="checkbox" id="gym_machine" name="equipment" value="Gym (Machine)">
+            <label for="gym_machine">Gym (Machine)</label><br>
+            <input type="checkbox" id="gym_equipment" name="equipment" value="Gym (Equipment)">
+            <label for="gym_equipment">Gym (Equipment)</label><br>
+        </fieldset>
+        <br>
+        
+        <label for="experience">Fitness Experience:</label>
+        <select name="experience" id="experience">
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+        </select>
+        <br>
+                <label for="frequency">Workout Frequency:</label>
+        <select name="frequency" id="frequency">
+            <option value="1-2 days/week">1-2 days/week</option>
+            <option value="3-4 days/week">3-4 days/week</option>
+            <option value="5-6 days/week">5-6 days/week</option>
+            <option value="7 days/week">7 days/week</option>
+        </select>
+        <br>
+                <label for="repeat">% Repeated Exercises:</label>
+        <select name="repeat" id="repeat">
+            <option value="0%">0%</option>
+            <option value="25%">25%</option>
+            <option value="50%">50%</option>
+            <option value="75%">75%</option>
+            <option value="100%">100%</option>
+        </select>
+        <span class="info-icon" onclick="toggleTooltip()">?</span>
+        <div id="tooltip" style="display:none;">Setting repetition at 0% ensures all exercises in your plan will be unique. Increase the percentage to include more consistent exercises in your schedule.</div>
+        <br>
+
+        <!-- Split Select Section (Initially Hidden) -->
+        <div id="split-section">
+            <label for="split">Body Split Plan:</label>
+            <select name="split" id="split">
+                <option value="Full Body Workout">Full Body Workout</option>
+                <option value="Upper/Lower Split">Upper/Lower Split</option>
+                <option value="Push/Pull Split">Push/Pull Split</option>
+                <option value="Push/Pull/Legs Split">Push/Pull/Legs Split</option>
+                <option value="Bro Split">Bro Split</option>
+            </select>
+        </div>
+        <button type="submit">Generate</button>
+    </form>
+    
+    <script>
+        function toggleTooltip() {
+            var tooltip = document.getElementById("tooltip");
+            tooltip.style.display = tooltip.style.display === "none" ? "block" : "none";
+        }
+    </script>
+    
+</body>
+</html>
+
